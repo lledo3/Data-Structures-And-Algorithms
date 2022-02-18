@@ -19,7 +19,8 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 */
 
 class Solution {
-    public int[] twoSum(int[] nums, int targetSum) {
+    //returns actual number
+    public int[] twoSumNumber(int[] nums, int targetSum) {
         int[] result = new int[2];
         HashMap<Integer,Boolean> numbers = new HashMap<>();
         for(Integer i : nums){
@@ -29,6 +30,22 @@ class Solution {
                 return result;
             }else{
                 numbers.put(i, true);
+            }
+        }
+        return new int[0];
+    }
+    //returns the indices
+    public int[] twoSumIndice(int[] nums, int target) {
+        int[] result = new int[2];
+        HashMap<Integer,Integer> numbers = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            int diff = target - nums[i];
+            if(numbers.containsKey(diff)){
+                result[0] = numbers.get(diff);
+                result[1] = i;
+                return result;
+            }else{
+                numbers.put(nums[i], i);
             }
         }
         return new int[0];
