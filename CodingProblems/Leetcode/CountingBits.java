@@ -35,6 +35,7 @@ It is very easy to come up with a solution with a runtime of O(n log n). Can you
 Can you do it without using any built-in function (i.e., like __builtin_popcount in C++)?
 */
 //using division and modulo of 2
+//formula arr[i] = i / 2 + i % 2 
 class Solution {
     public int[] countBits(int n) {
         int[] res = new int[n + 1];
@@ -45,7 +46,8 @@ class Solution {
         return res;
     }
 }
-//using bit shift operators
+//using bitwise shift operators
+// right shift (>>) adds and AND (&) is the modulo
 class Solution {
     public int[] countBits(int n) {
         int[] res = new int[n + 1];
