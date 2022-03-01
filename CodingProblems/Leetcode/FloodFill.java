@@ -13,7 +13,10 @@ Return the modified image after performing the flood fill.
 
 Example 1:
 
-Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2
+Input: image = [[1,1,1],
+                [1,1,0],
+                [1,0,1]], 
+sr = 1, sc = 1, newColor = 2
 Output: [[2,2,2],[2,2,0],[2,0,1]]
 Explanation: From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.
 Note the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.
@@ -29,24 +32,26 @@ Constraints:
 m == image.length
 n == image[i].length
 1 <= m, n <= 50
-0 <= image[i][j], newColor < 216
+0 <= image[i][j], newColor < 2^16
 0 <= sr < m
 0 <= sc < n
 */
 
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-        int color = image[sr][sc];
-        if (color != newColor) dfs(image, sr, sc, color, newColor);
+        if(image[sr][sc] == newColor) return image;
+        floodFillDfs(image, sr, sc, newColor, image[sr][sc]);
         return image;
     }
-    public void dfs(int[][] image, int r, int c, int color, int newColor) {
-        if (image[r][c] == color) {
-            image[r][c] = newColor;
-            if (r >= 1) dfs(image, r-1, c, color, newColor);
-            if (c >= 1) dfs(image, r, c-1, color, newColor);
-            if (r+1 < image.length) dfs(image, r+1, c, color, newColor);
-            if (c+1 < image[0].length) dfs(image, r, c+1, color, newColor);
+    
+    public void floodFillDfs(int[][] image, int sr, int sc, int newColor, int color){
+        if(sr < 0 || sc < 0 || sr >= image.length || sc >= image[0].length || image[sr][sc] != color){
+            return;
         }
+        image[sr][sc] = newColor;
+        floodFillDfs(image, sr - 1, sc, newColor, color); //up
+        floodFillDfs(image, sr + 1, sc, newColor, color); //down
+        floodFillDfs(image, sr, sc - 1, newColor, color);//left
+        floodFillDfs(image, sr, sc + 1, newColor, color);//right
     }
 }
