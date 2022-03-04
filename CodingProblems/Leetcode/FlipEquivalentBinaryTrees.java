@@ -14,6 +14,7 @@ Explanation: We flipped at nodes with values 1, 3, and 5.
 Example 2:
 
 Input: root1 = [], root2 = []
+Output: true
 
 Example 3:
 
