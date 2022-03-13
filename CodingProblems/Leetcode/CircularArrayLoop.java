@@ -81,11 +81,15 @@ class Solution {
         return false;
     }
     public int getNextPosition(int[] nums, int pointer, boolean direction){
+    	//get the direction from the pointer
         boolean dir = nums[pointer] >= 0;
+        //if the directions are not the same return -1
         if(dir != direction){
             return -1;
         }
+        //this means that I will get the next index: example if pointer is 4 and nums[pointer] is 2 and the length of the array is 5 (4 + 2) % 5 -> 6%5 is index 1
         int nextIdx = (pointer + nums[pointer]) % nums.length;
+        //checking if it is negative number
         if(nextIdx < 0){
             nextIdx = nextIdx + nums.length;
         }
