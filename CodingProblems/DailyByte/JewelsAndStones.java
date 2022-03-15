@@ -22,7 +22,7 @@ public int numJewelsFromStones(String stones, String jewels) {
 }
 /*
 Big-O Analysis
-Runtime: O(nm)
+Runtime: O(n*m)
 */
 public int numJewelsFromStones(String stones, String jewels) {
     HashSet<Character> jewelsSet = new HashSet<Character>();
