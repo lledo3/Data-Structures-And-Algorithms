@@ -1,0 +1,17 @@
+Converting primitive arrays to List:
+
+int[] ints = {1,2,3};
+List<Integer> list = Arrays.stream(ints).boxed().collect(Collectors.toList());
+
+String[] words = {"000", "aaa", "bbb", "ccc", "ddd"};
+List<String> wordList = new ArrayList<String>(Arrays.asList(words));
+
+Converting arraylist to primitive arrays:
+
+Java 8:
+int[] array = list.stream().mapToInt(i->i).toArray();
+int[] array = list.stream().mapToInt(Integer::intValue).toArray();
+String[] strings = list.stream().toArray(String[]::new);
+
+Java 11+:
+String[] strings = list.toArray(String[]::new);
