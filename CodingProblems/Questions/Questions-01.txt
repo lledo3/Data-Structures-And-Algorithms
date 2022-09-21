@@ -1,0 +1,255 @@
+Core Java Concepts:
+"Q1:  Explain Inhertance, Encapsulation & Polymorphism. (Follow up if Static method can be override)
+	C++: The capability of a class to derive properties and characteristics from another class is called Inheritance
+	Java: It is the mechanism in java by which one class is allowed to inherit the features(fields and methods) of another class.  
+		Super Class: The class whose features are inherited is known as a superclass(or a base class or a parent class).
+		Sub Class: The class that inherits the other class is known as a subclass(or a derived class, extended class, or child class). The subclass can add its own fields and methods in addition to the superclass fields and methods.
+		Reusability: Inheritance supports the concept of “reusability”, i.e. when we want to create a new class and there is already a class that includes some of the code that we want, we can derive our new class from the existing class. By doing this, we are reusing the fields and methods of the existing class.
+
+	Encapsulation is defined as the wrapping up of data under a single unit. It is the mechanism that binds together code and the data it manipulates. Another way to think about encapsulation is, that it is a protective shield that prevents the data from being accessed by the code outside this shield.
+
+	The word polymorphism means having many forms. In simple words, we can define polymorphism as the ability of a message to be displayed in more than one form.
+Q2: Can a class be both abstract and final at the same time? (NO: as abstract need to be extends and final does not allow)
+	No, you cannot make an abstract class or method final in Java because the abstract and final are mutually exclusive concepts.
+Q3: How to make a java class to immutable ? (Or why the object used as a key should be immutable)
+	Immutable class in java means that once an object is created, we cannot change its content. In Java, all the wrapper classes (like Integer, Boolean, Byte, Short) and String class is immutable.
+Additional Questions:
+Q4: What is Volatile?
+	Using volatile is yet another way (like synchronized, atomic wrapper) of making class thread-safe. Thread-safe means that a method or class instance can be used by multiple threads at the same time without any problem.
+	For Java, “volatile” tells the compiler that the value of a variable must never be cached as its value may change outside of the scope of the program itself. In C/C++, “volatile” is needed when developing embedded systems or device drivers, where you need to read or write a memory-mapped hardware device.
+Q5: What is Checked, Unchecked and Runtime Exception? Can Runtime exception be handled?"
+	Checked Exceptions: These are the exceptions that are checked at compile time.
+	Unchecked Exceptions: These are the exceptions that are not checked at compile time.
+	Runtime Exception: These are the exceptions that are not checked at compile time.
+
+Collection Framework:
+"Q1: How does a get method work in Hashmap? How does a HashMap work internally? (This should cover Equal and Hashcode method and Collision - Java 1.6 LinkedList vs Java 1.8 - Binary Tree Backed)
+(Follo up - Difference Between Hashmap and Concurrent hashmap OR  you can ask below Q -
+What do you use between Hashmap access using Synchronized method vs ConncurrentHashmap)
+	The java.util.HashMap.get() method of HashMap class is used to retrieve or fetch the value mapped by a particular key mentioned in the parameter. It returns NULL when the map contains no such mapping for the key.
+
+	HashMap uses its static inner class Node<K,V> for storing map entries. That means each entry in hashMap is a Node . Internally HashMap uses a hashCode of the key Object and this hashCode is further used by the hash function to find the index of the bucket where the new entry can be added.
+		equals(): It checks the equality of two objects. It compares the Key, whether they are equal or not. It is a method of the Object class. It can be overridden. If you override the equals() method, then it is mandatory to override the hashCode() method.
+
+		hashCode(): This is the method of the object class. It returns the memory reference of the object in integer form. The value received from the method is used as the bucket number. The bucket number is the address of the element inside the map. Hash code of null Key is 0.
+
+		Hash Collision: This is the case when the calculated index value is the same for two or more Keys.
+
+	HashMap is non-Synchronized in nature i.e. HashMap is not Thread-safe whereas ConcurrentHashMap is Thread-safe in nature.
+	HashMap performance is relatively high because it is non-synchronized in nature and any number of threads can perform simultaneously. But ConcurrentHashMap performance is low sometimes because sometimes Threads are required to wait on ConcurrentHashMap.
+
+	ConcurrentHashMap allows performing concurrent read and write operation. Hence, performance is relatively better than the Synchronized Map. In Synchronized HashMap, multiple threads can not access the map concurrently. Hence, the performance is relatively less than the ConcurrentHashMap
+
+Q2: Explain time complexity between Array, Array List & HasSet
+	Array: Insert O(n), Deletion O(n), Access O(1), Search O(n)
+	Array List: Add O(1), Remove O(n), Get O(1), Contains O(n)
+	HashSet: Add O(1), Remove O(1), Contains O(1), Next O(h/n)
+Q3: Explain Blocking Queue, give me an example of BlockingQueue usage?
+	BlockingQueue is a java Queue that support operations that wait for the queue to become non-empty when retrieving and removing an element, and wait for space to become available in the queue when adding an element.
+	A simple BlockingQueue example, a producer generates data and put it into a queue, at the same time, a consumer takes the data from the same queue. 1.1 Producer – A Runnable object to put 20 integers into a queue. 1.2 Consumer – A Runnable object to take items from a queue. 1.3 Run it.
+"
+
+Multithreading:
+"Q1: How do you implement a Thread In Java? Write a code snippet - This will give good graps on  coding skill + understanding of multi threading in general - ask follow up Q on Callable vs Runnable)
+	You can create threads by implementing the runnable interface and overriding the run() method. Then, you can create a thread object and call the start() method. Thread Class: The Thread class provides constructors and methods for creating and operating on threads.
+
+	Callable , represents an asynchronous task which can be executed by a separate thread. For instance, it is possible to submit a Callable object to a Java ExecutorService which will then execute it asynchronously.
+
+	A runnable interface is an interface that contains a single method. The Java program defines this single method in java. lang package and calls it upon the execution of the thread class. It provides a template for objects that a class can implement using Threads.
+Q2: Difference between Executor & ExecutorService (Advance concurrency Q) - Should be able to explain task submission, future object and atleast one threadpool executors)
+	Executor just executes stuff you give it. ExecutorService adds startup, shutdown, and the ability to wait for and look at the status of jobs you've submitted for execution on top of Executor
+
+If can't answer #2- 
+Q3: What is a deadlock in Multi-threading? (ask how to write a deadlock"
+	Deadlock describes a condition in which two or more threads are blocked (hung) forever because they are waiting for each other.
+
+Java 8 Concept/Construct:
+"Q1: Explain default methods in Interface (Or what is functional interface? )
+	Default methods enable you to add new functionality to existing interfaces and ensure binary compatibility with code written for older versions of those interfaces. In particular, default methods enable you to add methods that accept lambda expressions as parameters to existing interfaces.
+
+	A functional interface is an interface that contains only one abstract method. They can have only one functionality to exhibit. From Java 8 onwards, lambda expressions can be used to represent the instance of a functional interface. A functional interface can have any number of default methods.	(Runnable, ActionListener, Comparable are some of the examples of functional interfaces.)
+Q2: What is  stream in java 8? Eloberate streams usage with regards to accessing collections data?
+Drive candidate into explaining while using stream to access data how it does not modify the underlying collection - This is kind of followup pushing candidate to give an example of its usage.
+	A stream is a sequence of objects that supports various methods which can be pipelined to produce the desired result.
+
+	For example, filtering a Stream obtained from a collection produces a new Stream without the filtered elements, rather than removing elements from the source collection.
+
+	Java 8 Filter Example: Counting Empty String:
+		List<String> strList = Arrays.asList("abc", "", "bcd", "", "defg", "jk"); 
+		long count = strList.stream().filter(x -> x.isEmpty()).count();
+
+		This is an excellent example to demonstrate how you can filter specific objects from Collection and create a subset of elements that satisfy the given criterion. In second-line strList.stream() returns a Stream, and then we use the filter() method, which accepts a Predicate.
+"
+
+Java Code Construct:
+"Q-1 (New Entry): Find a duplicate within unsorted array, 
+            given input is: [1, 2, 3, 1, 2, 3, 4, 5, 3, 6]
+   (Expected solution is bruite force with 2 for loop & Optimized with with Set)
+   brute force:
+   	for i = 0; i < size(a); i++ {
+	  for j = i+1; j < size(a); j++ {
+	    if(a[i] == a[j]) return a[i]
+	  }
+	}
+
+	Optimized with a set
+	Set<String> store = new HashSet<>(); 
+	for (String name : names) { 
+		if (store.add(name) == false) { 
+			System.out.println("found a duplicate element in array : " + name); 
+		} 
+	}
+
+Q2: Find length of smallest subarray with sum equal to N. Example: 
+        arr[] = {1, 3, 7, 5, 9, 10, 5} and N is 15. Answer is 2
+
+        public int minSubArrayLen(int target, int[] nums) {
+	        int result = Integer.MAX_VALUE;
+	        int left = 0;
+	        int currSum = 0;
+	        
+	        for(int i = 0; i < nums.length; i++){
+	            currSum += nums[i];
+	            
+	            while(currSum >= target){
+	                result = Math.min(result, i + 1 - left);
+	                currSum -= nums[left];
+	                left++;
+	            }
+	        }
+        return result != Integer.MAX_VALUE ? result : 0;
+    } 
+
+Q3:  Reverse String (Should be done either with recurssion or  inplace replacement in array - if candidate uses API, let them do it but than ask implement without using API)
+
+	public String reverse(String s) {
+	    String reversed = "";
+	    for (int i = s.length() - 1; i >= 0; i--) {
+	        reversed += s.charAt(i);
+	    }
+
+	    return reversed;
+	}
+
+Q4: Identify given number is power of 10 without using java libraries such Math package
+	public class JavaApplication1 {
+    public static void main(String[] args){
+        int base = 2, power = 10;
+        int result = 1;
+        // running loop while the power > 0
+        while (power != 0) {
+            result = result * base;
+            // power will get reduced after
+            // each multiplication
+            power--;
+        }
+        System.out.println("Result =  " + result);
+    }
+}
+
+Q5: Sort array [List<Integer> numList = Arrays.asList(34, 6, 3, 12, 65, 1, 8);] using stream pipeline
+	Creating comparator on fly:
+	numList.stream().sorted((i1, i2) -> i1.compareTo(i2)).forEach(System.out::println);
+
+	With default comparator provided by java 8 when no argument passed to sorted():
+	numList.stream().sorted().forEach(System.out::println); //Natural order
+Q6: Swap number without introducing another variable. Example: a = 5 & b = 7"
+	Using Arthimetic Operators:
+	public static void main(String a[])
+    {
+        int a = 5;
+        int b = 7;
+        a = a + b;
+        b = a - b;
+        a = a - b;
+        System.out.println("After swapping:"
+                           + " a = " + a + ", b = " + b);
+    }
+
+    Using bitwise:
+    public static void main(String a[])
+    {
+        int x = 10;
+        int y = 5;
+ 
+        // Code to swap 'x' (1010) and 'y' (0101)
+        x = x ^ y; // x now becomes 15 (1111)
+        y = x ^ y; // y becomes 10 (1010)
+        x = x ^ y; // x becomes 5 (0101)
+ 
+        System.out.println("After swap: x = "
+                           + x + ", y = " + y);
+    }
+
+Spring & API's:
+"Q 1: What is dependency Injection? What is an IOC container? What are the scope of bean and what is default scope if not specified) - (In short you are asking how Spring works)
+	Dependency Injection is a fundamental aspect of the Spring framework, through which the Spring container “injects” objects into other objects or “dependencies”. Simply put, this allows for loose coupling of components and moves the responsibility of managing components onto the container.
+
+	Spring IoC Container is the core of Spring Framework. It creates the objects, configures and assembles their dependencies, manages their entire life cycle. The Container uses Dependency Injection(DI) to manage the components that make up the application.
+
+	Scopes a single bean definition to any number of object instances. Scopes a single bean definition to the lifecycle of a single HTTP request; that is each and every HTTP request will have its own instance of a bean created off the back of a single bean definition.
+
+	Singleton is the default scope for a Bean, the one that will be used if nothing else is indicated. This scope implies that Spring container will create an only shared instance of the class designated by this bean, so each time the Bean is required the same object will be injected.
+
+Q2: Define the steps to expose API using Spring boot framework (If Spring boot is not used- ask how to using Spring Framework) - Should cover  Config, Rest Controller, Request Mapping, alteast should cover Get Post - (this Q - will evaluate candidates practical experience/expertise with spring)
+	
+
+Q3: What is AOP?
+	What is Spring AOP? Spring AOP enables Aspect-Oriented Programming in spring applications. In AOP, aspects enable the modularization of concerns such as transaction management, logging or security that cut across multiple types and objects (often termed crosscutting concerns).
+
+Q4: What are the different HTTP method being used in REST API? And what are the different HTTP Status?"
+	The primary or most-commonly-used HTTP verbs (or methods, as they are properly called) are POST, GET, PUT, PATCH, and DELETE. These correspond to create, read, update, and delete (or CRUD) operations, respectively.
+
+	Informational responses ( 100 – 199 )
+	Successful responses ( 200 – 299 )
+	Redirection messages ( 300 – 399 )
+	Client error responses ( 400 – 499 )
+	Server error responses ( 500 – 599 )
+
+Cloud Concept and Microservices Architecture:
+"Q1: How is microservices architecture different from monolitic architecture?
+	A monolithic application is built as a single unified unit while a microservices architecture is a collection of smaller, independently deployable services.
+
+Q2: What are the challenges you face when migrating monolith application to to microservices?
+	More granularity means more moving parts. Refactoring a monolithic application to microservices creates many small components that constantly communicate; the complexity is shifted around to the interconnections between services.
+
+	When more services are interacting, you increase possible failure points. Smart developers stay one step ahead and plan for failure.
+
+	Tracing performance problems across tiers for a single business transaction can be difficult. This can be handled by correlating calls with a variety of methods including custom headers, tokens or IDs.
+
+	Distributed logic with distributed data increases the effort of finding the root cause of issues. Traditional logging is ineffective because microservices are stateless, distributed and independent — you would produce too many logs to easily locate a problem. Logging must be able to correlate events across several platforms.
+
+	Operational complexity is also increased due to the increased demands on managing these services and monitoring them. The ability to quickly deploy small independent services is a win for development, but it puts additional strain on operations as half-a-dozen applications now turn into hundreds of little microservices. Coordinating a large number of rapidly changing services necessitates automated continuous integration and continuous delivery.
+
+Q3: What is containerization, how it benefits application deployment? (Check if candidate have worked on Kubernetes/docker etc)
+	Containerization is a type of virtualization in which all the components of an application are bundled into a single container image and can be run in isolated user space on the same shared operating system.
+
+	Containerization is one of the most efficient methods of virtualization available to developers. Containers improve efficiency in two ways: they use all available resources, and they minimize overhead. When properly configured, containers allow a host to take advantage of virtually all available resources.
+Q4: Have you used any cloud environment to host your application? Explain few steps to deploy the app from local to cloud? (Just to know if candiate has cloud experience)
+"
+
+Database Concepts:
+"Q1: How to find Second highest Salary from the table? (SQL Query - Given an example table)
+	select *from employee where salary=(select Max(salary) from employee);
+
+Q2: What is an impact of an excessive indexing?
+	Too many indexes create additional overhead associated with the extra amount of data pages that the Query Optimizer needs to go through. Also, too many indexes require too much space and add to the time it takes to accomplish maintenance tasks.
+
+Q3: What is difference between Delete vs Truncate?
+	The DELETE statement removes rows one at a time and records an entry in the transaction log for each deleted row. TRUNCATE TABLE removes the data by deallocating the data pages used to store the table data and records only the page deallocations in the transaction log.
+
+Q4: Join vs Left outer join
+	Left Join and Left Outer Join are one and the same. The former is the shorthand for the latter. The same can be said about the Right Join and Right Outer Join relationship. The demonstration will illustrate the equality.
+
+	Prefer JOIN (aka "INNER JOIN") to link two related tables. In practice, you'll use INNER JOIN most of the time.
+	INNER JOIN is the intersection of the two tables. It's represented by the "green" section in the middle of the Venn diagram above.
+	Use an "Outer Join" when you want the left, right or both outer regions.
+
+Q5: Clustered index vs Non Clustered Index
+	A clustered index is used to define the order or to sort the table or arrange the data by alphabetical order just like a dictionary. A non-clustered index collects the data at one place and records at another place.
+
+Check if Candidate has exposure to NoSQL:
+Q6: How NoSQL is different from SQL? Give an examples of NoSQL DB
+	SQL databases are table-based, while NoSQL databases are document, key-value, graph, or wide-column stores. SQL databases are better for multi-row transactions, while NoSQL is better for unstructured data like documents or JSON.
+	
+"
